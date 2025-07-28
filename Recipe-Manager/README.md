@@ -44,8 +44,9 @@ You will need Python installed on your system. This project is developed with Py
     ```text
     Recipe-Manager/
     ├── recipe_manager.py
-    └── data/
-        └── recipes.json (or recipes.txt)
+    ├── data/
+    |   └── recipes.json (or recipes.txt)
+    └── README.md
     ```
 
     The `data` directory will store your recipe information.
@@ -114,7 +115,7 @@ The code is well-commented, providing insights into the logic and functionality 
 ---
 
 This project is a standalone exercise designed to showcase Python fundamentals.
-
+11111
 ---
 
 ## License
