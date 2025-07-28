@@ -112,33 +112,157 @@ def view_recipes(recipes: Recipes) -> None:
       print("-" * (len(recipe['title']) + 14))
 
 def search_recipes(recipes: Recipes) -> None:
-   pass
-def edit_recipe(recipes: Recipes) -> None:
-   pass
-def update_recipe(recipes: Recipes) -> None:
-   pass
-def delete_recipe(recipes: Recipes) -> None:
-  pass
-2
-print(f"Recipe Manager System Initialized.")
+  print("\n--- Search Recipes ---")
+  if not recipes:
+    print("No recipes available to search.")
+    return
 
-# # Add initial recipe using the recipe's method
-# add_recipe({"title": "Simple Tomato Pasta",
-#     "ingredients": [
-#         "200g pasta",
-#         "1 can chopped tomatoes",
-#         "2 cloves garlic, minced",
-#         "1 tbsp olive oil",
-#         "Salt and pepper to taste",
-#         "Fresh basil for garnish (optional)"
-#     ],
-#     "instructions": """1. Bring a large pot of salted water to a boil. Add pasta and cook according to package directions.
-# 2. While pasta cooks, heat olive oil in a pan over medium heat. Add minced garlic and cook until fragrant (about 1 minute).
-# 3. Pour in chopped tomatoes. Season with salt and pepper. Simmer for 10-15 minutes, stirring occasionally.
-# 4. Drain pasta, reserving about 1/2 cup of pasta water. Add drained pasta to the tomato sauce.
-# 5. If sauce is too thick, add a splash of reserved pasta water until desired consistency is reached.
-# 6. Serve hot, garnished with fresh basil if desired."""
-# })
+  search_term = input("Enter title or ingredient to search for: ").strip().lower()
+  if not search_term:
+    print("Search term cannot be empty.")
+    return
+
+  found_recipes = []
+  for recipe in recipes:
+    # Search by title
+    if search_term in recipe["title"].lower():
+      found_recipes.append(recipe)
+      continue # Move to the next recipe once found by title
+
+    # Search by ingredients
+    for ingredient in recipe["ingredients"]:
+      if search_term in ingredient.lower():
+        found_recipes.append(recipe)
+        break 
+      
+    if not found_recipes:
+        print(f"No recipes found matching '{search_term}'.")
+    else:
+        print(f"Found {len(found_recipes)} recipe(s) matching '{search_term}':")
+        for i, recipe in enumerate(found_recipes):
+            print(f"\n--- Found Recipe {i+1}: {recipe['title']} ---")
+            print("Ingredients:")
+            for ingredient in recipe['ingredients']:
+                print(f"- {ingredient}")
+            print("\nInstructions:")
+            print(recipe['instructions'])
+            print("-" * (len(recipe['title']) + 18))
+
+def edit_recipe(recipes: Recipes) -> None:
+    """Edits an existing recipe by its title."""
+    print("\n--- Edit Recipe ---")
+    if not recipes:
+        print("No recipes available to edit.")
+        return
+
+    # First, list recipes so the user knows what to edit
+    view_recipes(recipes)
+    title_to_edit = input("\nEnter the TITLE of the recipe you want to edit: ").strip()
+
+    # Find the recipe
+    recipe_found = None
+    for i, recipe in enumerate(recipes):
+        if recipe["title"].lower() == title_to_edit.lower():
+            recipe_found = recipe
+            recipe_index = i # Keep track of the index for duplicate title check on edit
+            break
+
+    if not recipe_found:
+        print(f"Recipe with title '{title_to_edit}' not found.")
+        return
+
+    print(f"\nEditing recipe: '{recipe_found['title']}'")
+    print("Enter new details (press Enter to keep current value):")
+
+    # Edit Title
+    new_title = input(f"New Title (Current: {recipe_found['title']}): ").strip()
+    if new_title:
+        # Check for duplicate new title, excluding the current recipe being edited
+        is_duplicate = False
+        for i, r in enumerate(recipes):
+            if i != recipe_index and r["title"].lower() == new_title.lower():
+                print(f"Error: A recipe with the title '{new_title}' already exists. Title not updated.")
+                is_duplicate = True
+                break
+        if not is_duplicate:
+            recipe_found["title"] = new_title
+
+    # Edit Ingredients
+    print("\n--- Edit Ingredients ---")
+    print("Current Ingredients:")
+    for i, ing in enumerate(recipe_found['ingredients']):
+        print(f"{i+1}. {ing}")
+
+    new_ingredients = []
+    print("Enter new ingredients one by one (type 'done' on an empty line when finished).")
+    print("To remove an ingredient, simply don't re-enter it.")
+    print("To keep existing ingredients, type them again or re-enter 'done' immediately.")
+    while True:
+        ingredient = input(f"New Ingredient {len(new_ingredients) + 1} (or 'done'): ").strip()
+        if ingredient.lower() == 'done':
+            break
+        if ingredient:
+            new_ingredients.append(ingredient)
+
+    if new_ingredients: # Only update if new ingredients were provided
+        recipe_found['ingredients'] = new_ingredients
+    else:
+        # Give option to clear ingredients or keep existing if user just types 'done'
+        if input("No new ingredients entered. Clear all current ingredients? (yes/no): ").lower() == 'yes':
+            recipe_found['ingredients'] = []
+            print("Ingredients cleared.")
+        else:
+            print("Keeping original ingredients.")
+
+    # Edit Instructions
+    print("\n--- Edit Instructions ---")
+    print("Current Instructions:")
+    print(recipe_found['instructions'])
+    print("Enter new instructions (type 'done' on an empty line by itself when finished).")
+    print("Press Enter immediately to keep current instructions.")
+
+    new_instructions_lines = []
+    while True:
+        line = input()
+        if line.lower() == 'done':
+            break
+        new_instructions_lines.append(line)
+
+    if new_instructions_lines: # Only update if new instructions were provided
+        new_instructions = "\n".join(new_instructions_lines).strip()
+        if new_instructions: # Make sure the new instructions aren't just empty
+            recipe_found['instructions'] = new_instructions
+        else:
+            print("New instructions were empty. Keeping original instructions.")
+    else:
+        print("Keeping original instructions.")
+
+    print(f"Recipe '{recipe_found['title']}' updated successfully!")
+    save_recipes(recipes) # Save immediately after editing
+
+def delete_recipe(recipes: Recipes) -> None:
+    """Deletes a recipe by its title."""
+    print("\n--- Delete Recipe ---")
+    if not recipes:
+        print("No recipes available to delete.")
+        return
+
+    view_recipes(recipes) # Show recipes so user knows what to delete
+    title_to_delete = input("\nEnter the TITLE of the recipe you want to delete: ").strip()
+
+    initial_len = len(recipes)
+    # Using a list comprehension to rebuild the list without the deleted item
+    recipes[:] = [recipe for recipe in recipes if recipe["title"].lower() != title_to_delete.lower()]
+
+    if len(recipes) < initial_len:
+        print(f"Recipe '{title_to_delete}' deleted successfully!")
+        save_recipes(recipes) # Save immediately after deleting
+    else:
+        print(f"Recipe with title '{title_to_delete}' not found.")
+
+# --- 5. User Interface (Main Application Loop) ---
+
+print(f"Recipe Manager System Initialized.")
 
 # Loop program
 def main() -> None:
