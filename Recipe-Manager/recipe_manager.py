@@ -15,7 +15,7 @@ import os
 from typing import Dict, List, Any
 
 # 2. Define Recipe Data Structure
-# - Decide on the structure of a recipe (e.g., title, ingredients, instructions).
+# - Structure recipe data as JSON using, title, , and instructions.
 # - Implement a data structure to represent a list that will hold all our recipe dictionaries in memory.
 # Each dictionary will represent a single recipe.
 # Example structure of a single recipe dictionary:
@@ -65,10 +65,10 @@ def save_recipes(recipes: Recipes) -> None:
             json.dump(recipes, file, indent=4)
         print("Recipes saved successfully!")
     except IOError as e:
-      print(f"Error saving recipes: {e}") 
+        print(f"Error saving recipes: {e}") 
 
-# 3. Implement Recipe Management Functions
-# - Implement functions to add, view, edit, and delete recipes.
+# 3. Implement Recipe Management Functions: add, view, edit, and delete recipes.
+# Adds a new recipe
 def add_recipe(recipes: Recipes) -> None:
     """
     Prompts the user for recipe details and adds a new recipe to the list.
@@ -84,41 +84,41 @@ def add_recipe(recipes: Recipes) -> None:
 
     # Input Validation: Title must not be empty
     if not title:
-      print("Title cannot be empty. Please try again.")
-      return
+        print("Title cannot be empty. Aborting recipe addition.")
+        return
     
     # Check for duplicate titles (case-insensitive)
     for recipe in recipes:
-      if recipe["title"].lower() == title.lower():
-        print(f"A recipe with the title '{title}' already exists. Please choose a different title or edit the existing recipe.")
-        return
+        if recipe["title"].lower() == title.lower():
+            print(f"A recipe with the title '{title}' already exists. Please choose a different title or edit the existing recipe.")
+            return
 
     ingredients = []
-    print("Enter ingredients one by one (type 'done' when finished and press Enter):")
+    print("Enter ingredients one by one (type 'done' on an empty line when finished and press Enter):") # Clarified instruction
     while True:
-       ingredient = input(f"Ingredient {len(ingredients) + 1}: ").strip()
-       if ingredient.lower() == 'done':
-          break
-       if ingredient:
-          ingredients.append(ingredient)
+        ingredient = input(f"Ingredient {len(ingredients) + 1}: ").strip()
+        if ingredient.lower() == 'done':
+            break
+        if ingredient: # Only add non-empty ingredients
+            ingredients.append(ingredient)
     
     if not ingredients:
-      print("A recipe must have atleast one ingredient. Aborting recipe.")
-      return
+        print("A recipe must have atleast one ingredient. Aborting recipe.")
+        return
 
-    print("Enter instructions (type 'done' when finished and press Enter):")
+    print("Enter instructions (type 'done' on an empty line by itself when finished and press Enter): ") # Clarified instruction
     instructions_lines = []
     while True:
-      line = input()
-      if line.lower() == 'done':
-        break
-      instructions_lines.append(line)
+        line = input()
+        if line.lower() == 'done':
+            break
+        instructions_lines.append(line)
     instructions = "\n".join(instructions_lines).strip()
        
-    # Input Validation: Title must not be empty
+    # Input Validation: Instructions must not be empty
     if not instructions:
-      print("Recipe instructions cannot be empty. Aborting recipe addition.")
-      return
+        print("Recipe instructions cannot be empty. Aborting recipe addition.")
+        return
     
     new_recipe = {
         "title": title,
@@ -128,7 +128,8 @@ def add_recipe(recipes: Recipes) -> None:
 
     recipes.append(new_recipe)
     print(f"Recipe '{title}' add successfully!")
-    save_recipes(recipes)
+    save_recipes(recipes) # Save immediately after adding
+
 # View all recipes
 def view_recipes(recipes: Recipes) -> None:
     """
@@ -154,6 +155,7 @@ def view_recipes(recipes: Recipes) -> None:
       print(recipe['instructions'])
       print("-" * (len(recipe['title']) + 14))
 
+# Search by title or ingredients
 def search_recipes(recipes: Recipes) -> None:
     """
     Searches for recipes by matching a search term against recipe titles or ingredients.
@@ -184,7 +186,7 @@ def search_recipes(recipes: Recipes) -> None:
         for ingredient in recipe["ingredients"]:
             if search_term in ingredient.lower():
                 found_recipes.append(recipe)
-                break 
+                break # Found in ingredients, no need to check other ingredients of this recipe
       
     if not found_recipes:
         print(f"No recipes found matching '{search_term}'.")
@@ -214,8 +216,7 @@ def edit_recipe(recipes: Recipes) -> None:
         print("No recipes available to edit.")
         return
 
-    # First, list recipes so the user knows what to edit
-    view_recipes(recipes)
+    view_recipes(recipes) # First, list recipes so the user knows what to edit
     title_to_edit = input("\nEnter the TITLE of the recipe you want to edit: ").strip()
 
     # Find the recipe
@@ -336,31 +337,36 @@ def main() -> None:
   It loads existing recipes, displays the main menu, and handles
   user interactions by calling the appropriate recipe management functions.
   """
-  recipes = load_recipes()
-  while True:
-    print("\n--- Welcome to the Recipe Manager! ---")
-    print("Please enter an action from the options below:")
-    print("1. Add a new recipe")
-    print("2. View all recipes")
-    print("3. Search for recipes")
-    print("4. Edit a recipe")
-    print("5. Delete a recipe")
-    print("6. Exit Program\n")
-    choice = input("Please enter your choice (1-6): ")
-    if choice == "1":
-        add_recipe(recipes)
-    elif choice == "2":
-        view_recipes(recipes)
-    elif choice == "3":
-        search_recipes(recipes)
-    elif choice == "4":
-        edit_recipe(recipes)
-    elif choice == "5":
-        delete_recipe(recipes)
-    elif choice == "6":
-        break
-    else:
-        print("Invalid choice. Please enter a number between (1-6)")
+  recipes = load_recipes() # Load recipes at the start of the program
 
+  while True:
+        print("\n--- Welcome to the Recipe Manager! ---")
+        print("Please enter an action from the options below:")
+        print("1. Add a new recipe")
+        print("2. View all recipes")
+        print("3. Search for recipes")
+        print("4. Edit a recipe")
+        print("5. Delete a recipe")
+        print("6. Exit Program\n")
+
+        choice = input("Please enter your choice (1-6): ")
+
+        if choice == "1":
+            add_recipe(recipes)
+        elif choice == "2":
+            view_recipes(recipes)
+        elif choice == "3":
+            search_recipes(recipes)
+        elif choice == "4":
+            edit_recipe(recipes)
+        elif choice == "5":
+            delete_recipe(recipes)
+        elif choice == "6":
+            print("Exiting Recipe Manager. Goodbye!")
+            break # Exsit the loop
+        else:
+            print("Invalid choice. Please enter a number between 1 and 6.")
+
+# This ensures main() is called only when the script is executed directly
 if __name__ == "__main__":
     main()
