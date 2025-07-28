@@ -29,7 +29,7 @@ def load_recipes() -> Recipes:
   os.makedirs(DATA_DIR, exist_ok=True)
   try:
       with open(RECIPES_FILE, "r") as file:
-        return json.loads(file)
+        return json.load(file)
   except (FileNotFoundError, json.JSONDecodeError):
       return []
   
@@ -37,14 +37,14 @@ def save_recipes(recipes: Recipes) -> None:
   os.makedirs(DATA_DIR, exist_ok=True)
   try:
       with open(RECIPES_FILE, "w") as file:
-        return json.dump(recipes,file, indent=4)
+        json.dump(recipes, file, indent=4)
       print("Recipes saved successfully!")
-  except EOFError as e:
+  except IOError as e:
       print(f"Error saving recipes: {e}") 
 
 # 3. Implement Recipe Management Functions
 # - Implement functions to add, view, edit, and delete recipes.
-def add_recipe(recipes: Recipes):
+def add_recipe(recipes: Recipes) -> None:
     print("\n--- Add a new recipe ---")
     title = input("Enter recipe title: ").strip()
 
@@ -90,19 +90,27 @@ def add_recipe(recipes: Recipes):
         "ingredients": ingredients,
         "instructions": instructions
     }
-    
+
     recipes.append(new_recipe)
     print(f"Recipe '{title}' add successfully!")
     save_recipes(recipes)
 # View all recipes
 def view_recipes(recipes: Recipes) -> None:
+    print("\n--- All Recipes ---")
     if not recipes:
-        print("No recipes avalible.")
-        return
-    elif recipes:
-        print(f"There are {len(recipes)} avalible recipes listed below.")
-        for title, recipe in recipe.items():
-          print(f" - {title}")
+      print("No recipes avalible.")
+      return
+    
+    print(f"There are {len(recipes)} avalible recipe(s) listed below:")
+    for i, recipe in enumerate(recipes):
+      print(f"\n--- Recipe {i+1}: {recipe['title']} ---")
+      print("Ingredients:")
+      for ingredient in recipe['ingredients']:
+        print(f"-{ingredient}")
+      print("\nInstructions:")  
+      print(recipe['instructions'])
+      print("-" * (len(recipe['title']) + 14))
+
 def search_recipes(recipes: Recipes) -> None:
    pass
 def edit_recipe(recipes: Recipes) -> None:
