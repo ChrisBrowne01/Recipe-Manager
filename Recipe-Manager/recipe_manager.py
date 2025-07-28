@@ -15,7 +15,7 @@ import os
 from typing import Dict, List, Any
 
 # 2. Define Recipe Data Structure
-# - Structure recipe data as JSON using, title, , and instructions.
+# - Structure recipe data as JSON using, title, and instructions.
 # - Implement a data structure to represent a list that will hold all our recipe dictionaries in memory.
 # Each dictionary will represent a single recipe.
 # Example structure of a single recipe dictionary:
@@ -142,15 +142,15 @@ def view_recipes(recipes: Recipes) -> None:
     """
     print("\n--- All Recipes ---")
     if not recipes:
-      print("No recipes avalible.")
+      print("No recipes available.")
       return
     
-    print(f"There are {len(recipes)} avalible recipe(s) listed below:")
+    print(f"There are {len(recipes)} available recipe(s) listed below:")
     for i, recipe in enumerate(recipes):
       print(f"\n--- Recipe {i+1}: {recipe['title']} ---")
       print("Ingredients:")
       for ingredient in recipe['ingredients']:
-        print(f"-{ingredient}")
+        print(f"- {ingredient}")
       print("\nInstructions:")  
       print(recipe['instructions'])
       print("-" * (len(recipe['title']) + 14))
