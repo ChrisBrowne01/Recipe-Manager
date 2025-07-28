@@ -1,4 +1,15 @@
-# Python Script: recipe_manager.py
+"""
+Recipe Manager Application
+
+This script provides a command-line interface for managing recipes.
+It allows users to add, view, search, edit, and delete recipes,
+with all data persisting to a JSON file.
+
+Key functionalities include:
+- Data storage in a JSON file for persistence.
+- Validation for user inputs to ensure data integrity.
+- Clear menu-driven interaction for ease of use.
+"""
 import json
 import os
 from typing import Dict, List, Any
@@ -26,25 +37,48 @@ RECIPES_FILE = os.path.join(DATA_DIR, "recipes.json")
 # --- File Handling Functions ---
 
 def load_recipes() -> Recipes:
-  os.makedirs(DATA_DIR, exist_ok=True)
-  try:
-      with open(RECIPES_FILE, "r") as file:
-        return json.load(file)
-  except (FileNotFoundError, json.JSONDecodeError):
-      return []
+    """
+    Loads recipes from the JSON file.
+
+    If the file does not exist or is empty/corrupt, it initializes an empty list.
+
+    Returns:
+        Recipes: A list of recipe dictionaries loaded from the file.
+    """
+    os.makedirs(DATA_DIR, exist_ok=True)
+    try:
+        with open(RECIPES_FILE, "r") as file:
+            return json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
   
 def save_recipes(recipes: Recipes) -> None:
-  os.makedirs(DATA_DIR, exist_ok=True)
-  try:
-      with open(RECIPES_FILE, "w") as file:
-        json.dump(recipes, file, indent=4)
-      print("Recipes saved successfully!")
-  except IOError as e:
+    """
+    Saves the current list of recipes to the JSON file.
+
+    Args:
+        recipes (Recipes): The list of recipe dictionaries to save.
+    """
+    os.makedirs(DATA_DIR, exist_ok=True)
+    try:
+        with open(RECIPES_FILE, "w") as file:
+            json.dump(recipes, file, indent=4)
+        print("Recipes saved successfully!")
+    except IOError as e:
       print(f"Error saving recipes: {e}") 
 
 # 3. Implement Recipe Management Functions
 # - Implement functions to add, view, edit, and delete recipes.
 def add_recipe(recipes: Recipes) -> None:
+    """
+    Prompts the user for recipe details and adds a new recipe to the list.
+
+    Includes validation for title (not empty, no duplicates),
+    ingredients (at least one), and instructions (not empty).
+
+    Args:
+        recipes (Recipes): The current list of recipe dictionaries to which the new recipe will be added.
+    """
     print("\n--- Add a new recipe ---")
     title = input("Enter recipe title: ").strip()
 
@@ -53,11 +87,12 @@ def add_recipe(recipes: Recipes) -> None:
       print("Title cannot be empty. Please try again.")
       return
     
-    # Check for duplicate recipes
+    # Check for duplicate titles (case-insensitive)
     for recipe in recipes:
       if recipe["title"].lower() == title.lower():
-        print("Recipe already exists. Please try again.")
+        print(f"A recipe with the title '{title}' already exists. Please choose a different title or edit the existing recipe.")
         return
+
     ingredients = []
     print("Enter ingredients one by one (type 'done' when finished and press Enter):")
     while True:
@@ -96,6 +131,14 @@ def add_recipe(recipes: Recipes) -> None:
     save_recipes(recipes)
 # View all recipes
 def view_recipes(recipes: Recipes) -> None:
+    """
+    Displays all recipes currently loaded, including their ingredients and instructions.
+
+    If no recipes are available, it prints a corresponding message.
+
+    Args:
+        recipes (Recipes): The list of recipe dictionaries to display.
+    """
     print("\n--- All Recipes ---")
     if not recipes:
       print("No recipes avalible.")
@@ -112,28 +155,36 @@ def view_recipes(recipes: Recipes) -> None:
       print("-" * (len(recipe['title']) + 14))
 
 def search_recipes(recipes: Recipes) -> None:
-  print("\n--- Search Recipes ---")
-  if not recipes:
-    print("No recipes available to search.")
-    return
+    """
+    Searches for recipes by matching a search term against recipe titles or ingredients.
 
-  search_term = input("Enter title or ingredient to search for: ").strip().lower()
-  if not search_term:
-    print("Search term cannot be empty.")
-    return
+    Displays all recipes that contain the search term (case-insensitive).
 
-  found_recipes = []
-  for recipe in recipes:
-    # Search by title
-    if search_term in recipe["title"].lower():
-      found_recipes.append(recipe)
-      continue # Move to the next recipe once found by title
+    Args:
+        recipes (Recipes): The list of recipe dictionaries to search through.
+    """
+    print("\n--- Search Recipes ---")
+    if not recipes:
+        print("No recipes available to search.")
+        return
 
-    # Search by ingredients
-    for ingredient in recipe["ingredients"]:
-      if search_term in ingredient.lower():
-        found_recipes.append(recipe)
-        break 
+    search_term = input("Enter title or ingredient to search for: ").strip().lower()
+    if not search_term:
+        print("Search term cannot be empty.")
+        return
+
+    found_recipes = []
+    for recipe in recipes:
+        # Search by title
+        if search_term in recipe["title"].lower():
+            found_recipes.append(recipe)
+            continue # Move to the next recipe once found by title
+
+        # Search by ingredients
+        for ingredient in recipe["ingredients"]:
+            if search_term in ingredient.lower():
+                found_recipes.append(recipe)
+                break 
       
     if not found_recipes:
         print(f"No recipes found matching '{search_term}'.")
@@ -149,7 +200,15 @@ def search_recipes(recipes: Recipes) -> None:
             print("-" * (len(recipe['title']) + 18))
 
 def edit_recipe(recipes: Recipes) -> None:
-    """Edits an existing recipe by its title."""
+    """
+    Edits an existing recipe by its title.
+
+    Allows the user to modify the title, ingredients, and instructions.
+    Users can keep existing values by pressing Enter without typing new input.
+
+    Args:
+        recipes (Recipes): The list of recipe dictionaries to modify.
+    """
     print("\n--- Edit Recipe ---")
     if not recipes:
         print("No recipes available to edit.")
@@ -241,7 +300,12 @@ def edit_recipe(recipes: Recipes) -> None:
     save_recipes(recipes) # Save immediately after editing
 
 def delete_recipe(recipes: Recipes) -> None:
-    """Deletes a recipe by its title."""
+    """
+    Deletes a recipe from the list by its title.
+
+    Args:
+        recipes (Recipes): The list of recipe dictionaries to delete from.
+    """
     print("\n--- Delete Recipe ---")
     if not recipes:
         print("No recipes available to delete.")
@@ -266,6 +330,12 @@ print(f"Recipe Manager System Initialized.")
 
 # Loop program
 def main() -> None:
+  """
+  The main function that runs the Recipe Manager application.
+
+  It loads existing recipes, displays the main menu, and handles
+  user interactions by calling the appropriate recipe management functions.
+  """
   recipes = load_recipes()
   while True:
     print("\n--- Welcome to the Recipe Manager! ---")
