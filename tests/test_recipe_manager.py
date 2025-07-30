@@ -2,6 +2,14 @@ import unittest
 import os
 import json
 from unittest.mock import patch, mock_open
+import sys 
+
+# Add the parent directory (project root) to the Python path
+# This ensures that 'recipe_manager' can be found
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.abspath(os.path.join(current_dir, '..')) # Go up one level from 'tests'
+sys.path.insert(0, project_root)
+
 # Import all relevant functions and constants from your main script
 from recipe_manager import add_recipe, view_recipes, search_recipes, edit_recipe, delete_recipe, load_recipes, save_recipes, RECIPES_FILE, DATA_DIR
 
