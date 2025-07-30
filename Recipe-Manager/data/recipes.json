@@ -1,11 +1,42 @@
-{"title": "Simple Tomato Pasta",
-    "ingredients": [
-        "200g pasta",
-        "1 can chopped tomatoes",
-        "2 cloves garlic, minced",
-        "1 tbsp olive oil",
-        "Salt and pepper to taste",
-        "Fresh basil for garnish (optional)"
-    ],
-    "instructions": "1. Bring a large pot of salted water to a boil. Add pasta and cook according to package directions.\n2. While pasta cooks, heat olive oil in a pan over medium heat. Add minced garlic and cook until fragrant (about 1 minute).\n3. Pour in chopped tomatoes. Season with salt and pepper. Simmer for 10-15 minutes, stirring occasionally.\n4. Drain pasta, reserving about 1/2 cup of pasta water. Add drained pasta to the tomato sauce.\n5. If sauce is too thick, add a splash of reserved pasta water until desired consistency is reached.\n6. Serve hot, garnished with fresh basil if desired."
-}
+[
+    {
+        "title": "Simple Tomato Pasta",
+        "ingredients": [
+            "200g pasta",
+            "1 can chopped tomatoes",
+            "2 cloves garlic, minced",
+            "1 tbsp olive oil",
+            "Salt and pepper to taste",
+            "Fresh basil for garnish (optional)"
+        ],
+        "instructions": "1. Bring a large pot of salted water to a boil. Add pasta and cook according to package directions.\n2. While pasta cooks, heat olive oil in a pan over medium heat. Add minced garlic and cook until fragrant (about 1 minute).\n3. Pour in chopped tomatoes. Season with salt and pepper. Simmer for 10-15 minutes, stirring occasionally.\n4. Drain pasta, reserving about 1/2 cup of pasta water. Add drained pasta to the tomato sauce.\n5. If sauce is too thick, add a splash of reserved pasta water until desired consistency is reached.\n6. Serve hot, garnished with fresh basil if desired."
+    },
+    {
+        "title": "Shoulder Egg",
+        "ingredients": [
+            "egg",
+            "water",
+            "salt"
+        ],
+        "instructions": "Bring water to the boil\nadd a pinch of salt\nput egg in boiling water\nboil for about 2 - 3 mins \nremove and serve."
+    },
+    {
+        "title": "Boiled egg",
+        "ingredients": [
+            "water",
+            "egg",
+            "bread",
+            "butter"
+        ],
+        "instructions": "boil water\nput egg in water\nboil for about 2 to 3 mins\nbutter bread\nremove egg from water and sever."
+    },
+    {
+        "title": "Jam Sandwich",
+        "ingredients": [
+            "Jam",
+            "butter",
+            "bread"
+        ],
+        "instructions": "Butter the two slices of bread\nButter the bread with jam of your choice.\nPlace the buttered and spread of jam side of the bread together.\nPlace on a plate. Eat and enjoy!"
+    }
+]
