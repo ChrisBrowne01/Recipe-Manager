@@ -39,27 +39,27 @@
 
 ### 7. Documentation and Comments
 
-- [ ] Document your code using clear and concise comments.
+- [x] Document your code using clear and concise comments.
 - [x] Provide a brief overview of the project and how to use the Recipe Manager.
 
 ### 8. Bonus Features (Optional)
 
-- [ ] Implement additional features such as categorizing recipes, adding ratings, or supporting multiple users.
-- [ ] Improve the user interface with colors or ASCII art.
+- [x] Implement additional features such as categorizing recipes, adding ratings, or supporting multiple users.
+- [x] Improve the user interface with colors or ASCII art.
 
 ### 9. Project Presentation
 
-- [ ] Prepare a brief presentation demonstrating your Recipe Manager.
-- [ ] Showcase the functionalities and explain how they were implemented.
-- [ ] Discuss any challenges faced during the development process and how you overcame them.
+- [x] Prepare a brief presentation demonstrating your Recipe Manager.
+- [x] Showcase the functionalities and explain how they were implemented.
+- [x] Discuss any challenges faced during the development process and how you overcame them.
 
 ### 10. Submission
 
-- [ ] Submit your project files along with any necessary documentation.
+- [x] Submit your project files along with any necessary documentation.
 - [x] Include instructions on how to run the Recipe Manager.
 
 ### 11. Additional Tips
 
-- [ ] Break down the project into smaller tasks and tackle them one at a time.
+- [x] Break down the project into smaller tasks and tackle them one at a time.
 - [x] Use version control (e.g., Git) to track changes and collaborate if working in a group.
-- [ ] Don't hesitate to consult Python documentation, online resources, or ask for help when stuck.
+- [x] Don't hesitate to consult Python documentation, online resources, or ask for help when stuck.
