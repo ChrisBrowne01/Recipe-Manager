@@ -31,7 +31,7 @@ Recipe = Dict[str, Any]
 Recipes = List[Recipe]
 
 # --- 4. Define the directory for data files and full path ---
-DATA_DIR = "data"
+DATA_DIR = "Recipe-Manager\data" # "data" is if Recipe-Manager is the root directory, as the root is the level above it, path should be "Recipe-Manager\data"
 RECIPES_FILE = os.path.join(DATA_DIR, "recipes.json")
 
 # --- File Handling Functions ---
@@ -142,18 +142,18 @@ def view_recipes(recipes: Recipes) -> None:
     """
     print("\n--- All Recipes ---")
     if not recipes:
-      print("No recipes available.")
-      return
+        print("No recipes available.")
+        return
     
     print(f"There are {len(recipes)} available recipe(s) listed below:")
     for i, recipe in enumerate(recipes):
-      print(f"\n--- Recipe {i+1}: {recipe['title']} ---")
-      print("Ingredients:")
-      for ingredient in recipe['ingredients']:
-        print(f"- {ingredient}")
-      print("\nInstructions:")  
-      print(recipe['instructions'])
-      print("-" * (len(recipe['title']) + 14))
+        print(f"\n--- Recipe {i+1}: {recipe['title']} ---")
+        print("Ingredients:")
+        for ingredient in recipe['ingredients']:
+            print(f"- {ingredient}")
+        print("\nInstructions:")  
+        print(recipe['instructions'])
+        print("-" * (len(recipe['title']) + 14))
 
 # Search by title or ingredients
 def search_recipes(recipes: Recipes) -> None:
