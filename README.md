@@ -1,123 +1,108 @@
 # Recipe Manager
 
----
+## Project Overview
 
-## Project Objective
-
-The **Recipe Manager** is a Python application designed to consolidate fundamental programming concepts such as data types, control flow, functions, file handling, and basic data manipulation. This project provides a practical platform for users to manage their recipes, offering functionalities to add, view, search, edit, and delete recipes.
-
----
+The Recipe Manager is a command-line application built with Python that allows users to manage their favorite recipes. It provides functionalities to add new recipes, view existing ones, search for recipes by title or ingredients, modify recipe details, and delete recipes. All recipe data is persistently stored in a JSON file, ensuring that your culinary creations are saved even after the application is closed.
 
 ## Features
 
-* **Add Recipe**: Easily add new recipes with details like title, ingredients, and instructions.
-* **View Recipes**: Display a list of all saved recipes.
-* **Search Recipes**: Find recipes by title or ingredients.
-* **Edit Recipe**: Modify existing recipe details.
-* **Delete Recipe**: Remove recipes from the collection.
-* **Persistent Storage**: Recipes are saved to and loaded from a file (text or JSON) to ensure data persistence between sessions.
-* **Command-Line Interface (CLI)**: A simple and intuitive CLI guides users through the application's features.
+* **Add Recipe:** Easily add new recipes by providing a title, a list of ingredients, and detailed instructions. The system prevents adding recipes with duplicate titles and ensures essential fields are not left empty.
+* **View Recipes:** Display all stored recipes, neatly formatted with their ingredients and instructions.
+* **Search Recipes:** Quickly find recipes by searching for keywords in their titles or ingredients.
+* **Edit Recipe:** Update the title, ingredients, or instructions of an existing recipe.
+* **Delete Recipe:** Remove unwanted recipes from your collection.
+* **Data Persistence:** All recipe data is automatically saved to and loaded from a `recipes.json` file, ensuring no data loss between sessions.
 
----
+## Project Structure
 
-## Getting Started
-
-### Prerequisites
-
-You will need Python installed on your system. This project is developed with Python 3.x.
-
-### Installation
-
-1. **Clone the repository (if applicable):**
-
-    ```bash
-    git clone <repository_url>
-    cd Recipe-Manager
-    ```
-
-    (If not using Git, simply download the project files.)
-
-2. **Project Structure:**
-
-    Ensure your project directory is organized as follows:
+The project is organized into a clean and logical directory structure:
 
     ```text
     Recipe-Manager/
-    ├── recipe_manager.py
     ├── data/
-    |   └── recipes.json (or recipes.txt)
-    └── README.md
+    │   └── recipes.json      # Stores all recipe data
+    ├── tests/
+    │   ├── init.py           # Makes 'tests' a Python package
+    │   └── test_recipe_manager.py # Unit tests for the application logic
+    ├── README.md             # This documentation file
+    └── recipe_manager.py     # The main application script
     ```
 
-    The `data` directory will store your recipe information.
+## How to Run the Application
 
-### How to Run
+### Prerequisites
 
-1. Navigate to the project's root directory in your terminal.
-2. Run the main script:
+* **Python 3.x:** Ensure you have Python 3 installed on your system. You can download it from [python.org](https://www.python.org/downloads/).
+
+### Installation & Setup
+
+1. **Clone the Repository:**
+
+    If your project is on GitHub/GitLab, start by cloning it:
+
+        ```bash
+        git clone [https://github.com/ChrisBrowne01/Recipe-Manager.git](https://github.com/ChrisBrowne01/Recipe-Manager.git)
+        cd Recipe-Manager
+        ```
+
+    If you've been working locally, simply navigate to your project's root directory:
+
+        ```bash
+        cd "C:\Users\Christina Browne\IT Online Learning\Python Essentials\Recipe-Manager"
+        ```
+
+2. **Ensure `data` directory exists:**
+
+    The application will create the `data` directory and `recipes.json` file automatically if they don't exist when you run it, but you can create it manually if you prefer:
+
+        ```bash
+        mkdir data
+        ```
+
+### Execution
+
+To start the Recipe Manager application, run the main script from the `Recipe-Manager` directory:
 
     ```bash
     python recipe_manager.py
     ```
 
----
+Follow the on-screen prompts to interact with the application.
+
+## How to Run Tests
+
+The project includes a comprehensive suite of unit tests to ensure the reliability and correctness of the application's core functionalities.
+
+### Test Execution
+
+To run all unit tests, navigate to the `Recipe-Manager` directory and execute the following command:
+
+    ```bash
+    python -m unittest discover tests
+    ```
+
+You should see an "OK" message if all tests pass.
+
+## Future Enhancements (Optional - but recommended to add a couple of ideas)
+
+Here are some ideas for future improvements to the Recipe Manager:
+
+* **User Interface:** Implement a graphical user interface (GUI) using libraries like Tkinter, PyQt, or a web-based interface using Flask or Django.
+* **Categorization:** Allow recipes to be categorized (e.g., "Breakfast," "Dinner," "Dessert").
+* **Scaling and Databases:** For larger recipe collections, migrate from JSON file storage to a more robust database system (e.g., SQLite, PostgreSQL).
+* **Recipe Rating:** Implement a system for users to rate recipes.
+* **Ingredient Management:** Track pantry inventory and suggest recipes based on available ingredients.
+* **Export/Import:** Add functionality to export recipes to different formats (e.g., PDF, HTML) or import recipes from external sources.
 
 ## Usage
 
 Upon running `recipe_manager.py`, you will be presented with a command-line interface. Follow the on-screen prompts to interact with the Recipe Manager.
 
----
+## Author
 
-## Project Structure and Implementation Details
-
-### 1. Recipe Data Structure
-
-Recipes are stored using a suitable data structure (e.g., a dictionary or a custom class) to represent their title, a list of ingredients, and instructions.
-
-### 2. Core Functionalities
-
-Each primary action (add, view, search, edit, delete) is implemented as a separate function within `recipe_manager.py` for modularity and readability.
-
-### 3. File Handling
-
-Recipes are saved to and loaded from a file (preferably JSON for structured data) to ensure that your recipe collection is preserved across different uses of the application.
-
-### 4. User Interface
-
-A clear and simple command-line interface provides easy navigation and interaction.
-
-### 5. Testing and Validation
-
-The application includes robust input validation to handle invalid user inputs gracefully and prevent errors.
-
-### 6. Documentation and Comments
-
-The code is well-commented, providing insights into the logic and functionality of different parts of the application.
-
----
-
-## Optional Enhancements (Bonus Features)
-
-* **Recipe Categorization**: Implement categories for recipes (e.g., "Breakfast", "Dinner", "Dessert").
-* **Recipe Ratings**: Allow users to assign ratings to recipes.
-* **Enhanced UI**: Explore adding colors or ASCII art to the command-line interface for a more engaging experience.
-
----
-
-## Challenges and Learnings
-
-(*This section can be expanded during project presentation to discuss any challenges encountered and how they were overcome, e.g., handling file I/O errors, ensuring data integrity, or designing the user interface.*)
-
----
-
-## Contributing
-
----
-
-This project is a standalone exercise designed to showcase Python fundamentals.
-11111
-
----
+* *Christina Browne*
+* **Website Portfolio:** [https//:chrismbrowne.co.uk/](https://chrismbrowne.co.uk/)
+* **GitHub Link:** [https://github.com/ChrisBrowne01](https://github.com/ChrisBrowne01)
 
 ## License
 
