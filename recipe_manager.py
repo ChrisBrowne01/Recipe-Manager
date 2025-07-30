@@ -103,7 +103,7 @@ def add_recipe(recipes: Recipes) -> None:
             ingredients.append(ingredient)
     
     if not ingredients:
-        print("A recipe must have atleast one ingredient. Aborting recipe.")
+        print("A recipe must have at least one ingredient. Aborting recipe.")
         return
 
     print("Enter instructions (type 'done' on an empty line by itself when finished and press Enter): ") # Clarified instruction
