@@ -31,7 +31,7 @@ Recipe = Dict[str, Any]
 Recipes = List[Recipe]
 
 # --- 4. Define the directory for data files and full path ---
-DATA_DIR = "Recipe-Manager\data" # "data" is if Recipe-Manager is the root directory, as the root is the level above it, path should be "Recipe-Manager\data"
+DATA_DIR = "data" # "data" is if Recipe-Manager is the root directory, as the root is the level above it, path should be "Recipe-Manager\data"
 RECIPES_FILE = os.path.join(DATA_DIR, "recipes.json")
 
 # --- File Handling Functions ---
