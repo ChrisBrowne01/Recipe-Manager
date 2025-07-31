@@ -44,8 +44,8 @@
 
 ### 8. Bonus Features (Optional)
 
-- [x] Implement additional features such as categorizing recipes, adding ratings, or supporting multiple users.
-- [x] Improve the user interface with colors or ASCII art.
+- [ ] Implement additional features such as categorizing recipes, adding ratings, or supporting multiple users.
+- [ ] Improve the user interface with colors or ASCII art.
 
 ### 9. Project Presentation
 
